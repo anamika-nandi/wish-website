@@ -1,3 +1,4 @@
+https://www.realtimecolors.com/?colors=050b0c-f8fbfc-48a4bc-9bd0de-75c1d5&fonts=Inter-Inter
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 

@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import svg from "@/public/landingpage/Vector2.png";
+// import svg from "@/public/landingpage/Vector2.png";
 
 interface FeatureCardProps {
   title: string;
@@ -22,7 +22,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
           className={`flex flex-col px-9 py-16 rounded-xl max-md:px-5 ${background} relative overflow-hidden h-full`}
         >
           {/* SVG Background */}
-          <div className="absolute inset-0 z-50 h-full w-full">
+          {/* <div className="absolute inset-0 z-50 h-full w-full">
             <Image
               src={svg}
               alt="Decorative SVG"
@@ -30,7 +30,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
               quality={100}
               className="object-contain"
             />
-          </div>
+          </div> */}
           <h3 className="mt-14 text-3xl font-medium uppercase max-md:mt-10 z-10 relative">
             {title.charAt(0)}
             <span className="lowercase">{title.slice(1)}</span>

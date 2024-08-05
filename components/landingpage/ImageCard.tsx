@@ -29,9 +29,8 @@ const ImageCard: React.FC<ImageCardProps> = ({
             <Image
               src={imageSrc}
               alt={title}
-              layout="fill"
-              objectFit="cover"
-              className="absolute inset-0"
+              fill
+              className="absolute inset-0 object-cover"
             />
           )}
           <h3 className="relative mt-14 text-3xl font-medium uppercase max-md:mt-10 max-md:max-w-full">

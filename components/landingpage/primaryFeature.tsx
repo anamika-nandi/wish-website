@@ -6,14 +6,10 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import clsx from "clsx";
 
 import { Container } from "@/components/landingpage/container";
-import backgroundImage from "@/public/sky_background.jpg";
 import { landingpageContent } from "@/constants/landingpage";
-import { marketplaceLandingpageContent } from "@/constants/marketplaceLandingpage";
 
 export function PrimaryFeatures({ isMarketplace = false }) {
-  const content = isMarketplace
-    ? marketplaceLandingpageContent
-    : landingpageContent;
+  const content = landingpageContent;
 
   let [tabOrientation, setTabOrientation] = useState<"horizontal" | "vertical">(
     "horizontal"
@@ -59,7 +55,7 @@ export function PrimaryFeatures({ isMarketplace = false }) {
             <span className="mt-2 ml-2">{content.primaryfeatures.suffix}</span>
           </div>
 
-          <p className="mt-6 text-lg tracking-tight text-text">
+          <p className="mt-6 text-lg tracking-tight text-gray-600">
             {content.primaryfeatures.subheadline}
           </p>
         </div>

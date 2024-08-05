@@ -43,7 +43,7 @@ export default function EmailForm() {
         required
         placeholder={landingpageContent.emailSignUp.placeholder}
         autoComplete="email"
-        className="placeholder-text-400 md:min-w-[410px] w-full h-10 flex-auto rounded-md border-0 md:px-8 text-md py-4 md:py-8 focus:bg-white  shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white/10 text-sm md:text-lg leading-6"
+        className="placeholder-gray-400 md:min-w-[410px] w-full h-10 flex-auto rounded-md border-0 md:px-8 text-md py-4 md:py-8 focus:bg-white  shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-white/10 text-sm md:text-lg leading-6"
       />
 
       <Submitbutton

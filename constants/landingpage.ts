@@ -1,103 +1,114 @@
-import placeholder from "@/public/landingpage/bluebackground.png";
+import code from "@/public/landingpage/code.jpg";
+import code2 from "@/public/landingpage/code2.jpg";
 
 export const landingpageContent = {
+  header: {
+    companyName: "Next.js Supabase Boilerplate",
+    NavAndFooterLinks: [
+      {
+        active: false,
+        text: "Setup",
+        href: "#setup",
+      },
+      {
+        active: false,
+        text: "Features",
+        href: "#features",
+      },
+    ],
+    button: {
+      active: true,
+      text: "Get Started",
+      href: "/signin",
+    },
+  },
   hero: {
-    preHeadline: " Seamless surfboard rentals",
-    headline: "Renting Surfboards",
-    highlightedText: "Made Effortless",
-    suffix: "for Small Businesses",
+    preHeadline: "Effortless Project Initialization",
+    headline: "Next.js and Supabase",
+    highlightedText: "Boilerplate Setup",
+    suffix: "Simplified",
     subheadline:
-      "Discover the Ultimate Marketplace for Renting Surfboards and Enhancing Your Surfing Adventures",
+      "Kickstart your project with an easy-to-use template for rapid landing page validation and development.",
     cta: {
       actions: {
         email: {
           active: true,
-          placeholder: "Enter your email address",
+          placeholder: "Enter your email for updates",
         },
         links: {
           howItWorks: {
             active: false,
-            text: "How It Works",
-            link: "#how-it-works",
+            text: "Learn More",
+            link: "#setup",
           },
         },
       },
       button: {
         text: "Get Started",
-        link: "/?onboarding=shop",
+        link: "/signup",
       },
     },
   },
   primaryfeatures: {
     id: "features",
-    headline: "Enhance and Expand ",
-    highlightedText: " Your Surf Shop’s",
-    suffix: "Reach",
+    headline: "Why Choose This",
+    highlightedText: "Boilerplate",
+    suffix: "Setup",
     subheadline:
-      "Attract more surfers effortlessly, streamline your rental management, and grow your business with our all-in-one platform.",
+      "Experience the ease and efficiency of starting your project with our comprehensive boilerplate.",
     features: [
       {
-        title: "Expand Your Reach",
+        title: "Quick Setup",
         description:
-          "Connect with a global community of surfers seeking rental options. Increase your shop’s visibility and attract more customers.",
-        // google seo search result screenshot
-        image: placeholder,
+          "Clone the repository, install dependencies, and start your server in minutes.",
+        image: code,
       },
       {
-        title: "Easy Management",
+        title: "Seamless Integration",
         description:
-          "Manage your listings, bookings, and customer interactions from a single, user-friendly platform.",
-        image: placeholder,
+          "Easily integrate with Supabase for authentication, database management, and more.",
+        image: code2,
       },
       {
-        title: "Surfboard Recommendation Tool",
+        title: "Optimized for Development",
         description:
-          "Our personalized recommendation tool helps surfers find the right board, increasing your chances of rentals.",
-        image: placeholder,
+          "Pre-configured settings and tools to streamline your development process.",
+        image: code,
       },
       {
-        title: "Maximize Your Online Visibility",
+        title: "Landing Page Validation",
         description:
-          "Our marketplace is SEO-optimized to ensure your surf shop appears at the top of search results. When users search for 'surfboard rentals near me,' your listings will be among the first they see, driving more traffic and bookings to your shop.",
-        image: placeholder,
+          "Validate your landing page concepts quickly with built-in components and templates.",
+        image: code2,
       },
     ],
   },
   secondaryFeature: {
-    id: "how-it-works",
-    headline: "How We Simplify ",
-    highlightedText: "Your Operations",
+    id: "setup",
+    headline: "Get Started",
+    highlightedText: "in 3 Simple Steps",
     suffix: "",
     subheadline:
-      "Our platform is designed to simplify your booking processes, attract more customers, and help you grow your surf shop. Here’s how it works:",
+      "Follow these steps to set up your Next.js and Supabase project effortlessly.",
     howItWorks: [
       {
-        step: "Create a Business Account",
-        summary:
-          "Stay on top of things with always up-to-date reporting features.",
-        description:
-          "Sign up and create a detailed profile for your shop, including location, rental options, and pricing.",
-        image: placeholder,
-        iconKey: "search",
+        step: "Clone the Repository",
+        summary: "Get the codebase locally.",
+        description: "Use Git to clone the repository to your local machine.",
+        iconKey: "clone",
       },
       {
-        step: "List Your Surfboards",
-        summary:
-          "Never lose track of what’s in stock with accurate inventory tracking.",
-        description:
-          "Easily add your surfboards and equipment to our platform, making them available to a wide audience of surfers.",
-        image: placeholder,
-        iconKey: "book",
+        step: "Install Dependencies",
+        summary: "Set up your project environment.",
+        description: "Run `npm install` to install all necessary dependencies.",
+        iconKey: "install",
       },
       {
-        // do fake google search result screenshot
-        step: "Attract More Surfers",
-        summary:
-          "Reach a global community of surfers and increase your bookings.",
+        step: "Start the Development Server",
+        summary: "Launch your project.",
         description:
-          "Our platform’s SEO optimization ensures your listings are visible to surfers searching for rentals near their location.",
-        image: placeholder,
-        iconKey: "reviews",
+          "Run `npm run dev` to start the development server and see your project in action.",
+        iconKey: "start",
       },
     ],
   },
@@ -105,43 +116,43 @@ export const landingpageContent = {
     id: "image-section",
     features: [
       {
-        title: "Amplify Your Visibility",
+        title: "Pre-built Components",
         description:
-          "Lorem ipsum dolor sit amet consectetur. Suspendisse eu consequat nulla tortor nulla.",
+          "Utilize a library of pre-built components to speed up your development process.",
         image: "",
         background: "bg-stone-900",
       },
       {
-        title: "Increase Your Sales",
+        title: "Responsive Design",
         description:
-          "Lorem ipsum dolor sit amet consectetur. Suspendisse eu consequat nulla tortor nulla.",
-        image: placeholder,
+          "Ensure your landing page looks great on all devices with responsive design principles.",
+        image: code,
         background: "",
       },
       {
-        title: "Streamlined Management",
+        title: "Customizable Templates",
         description:
-          "Lorem ipsum dolor sit amet consectetur. Suspendisse eu consequat nulla tortor nulla.",
-        image: placeholder,
+          "Easily customize templates to match your brand and project requirements.",
+        image: code2,
         background: "",
       },
       {
-        title: "Get Started Today",
+        title: "SEO Optimized",
         description:
-          "Lorem ipsum dolor sit amet consectetur. Suspendisse eu consequat nulla tortor nulla.",
+          "Improve your search engine ranking with SEO best practices integrated into the boilerplate.",
         image: "",
-        background: "bg-accent-400",
+        background: "bg-accent",
       },
     ],
   },
   emailSignUp: {
     id: "email-sign-up",
-    headline: "Join our marketplace",
-    highlightedText: "today",
+    headline: "Stay Updated",
+    highlightedText: "with Our Progress",
     suffix: "",
     subheadline:
-      "Discover the Ultimate Marketplace for Renting Surfboards and Enhancing Your",
+      "Enter your email to receive the latest updates and features for our Next.js and Supabase boilerplate.",
     placeholder: "Enter your email",
-    buttonText: "Get Started",
+    buttonText: "Subscribe",
   },
 };

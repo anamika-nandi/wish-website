@@ -13,9 +13,10 @@ import {
 } from "@headlessui/react";
 import clsx from "clsx";
 import { Container } from "@/components/landingpage/container";
-import logo from "@/public/logos/local_boards.png";
+import logo from "@/public/logo.png";
 import Image from "next/image";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+import { landingpageContent } from "@/constants/landingpage";
 
 function CloseIcon(props: React.ComponentPropsWithoutRef<"svg">) {
   return (
@@ -65,6 +66,16 @@ function MobileNavItem({
 function MobileNavigation(
   props: React.ComponentPropsWithoutRef<typeof Popover>
 ) {
+  // Filter the active links
+  const activeLinks = landingpageContent.header.NavAndFooterLinks.filter(
+    (link) => link.active
+  );
+
+  // Return null if there are no active links
+  if (activeLinks.length === 0) {
+    return null;
+  }
+
   return (
     <Popover {...props}>
       <PopoverButton className="group flex items-center rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10 dark:hover:ring-white/20">
@@ -90,9 +101,11 @@ function MobileNavigation(
         </div>
         <nav className="mt-6">
           <ul className="-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300">
-            <MobileNavItem href="/">For Shops</MobileNavItem>
-            <MobileNavItem href="/marketplace">Marketplace</MobileNavItem>
-            <MobileNavItem href="/about">About</MobileNavItem>
+            {activeLinks.map((link) => (
+              <MobileNavItem key={link.text} href={link.href}>
+                {link.text}
+              </MobileNavItem>
+            ))}
           </ul>
         </nav>
       </PopoverPanel>
@@ -130,12 +143,22 @@ function NavItem({
 }
 
 function DesktopNavigation(props: React.ComponentPropsWithoutRef<"nav">) {
+  const activeLinks = landingpageContent.header.NavAndFooterLinks.filter(
+    (link) => link.active
+  );
+  // Return null if there are no active links
+  if (activeLinks.length === 0) {
+    return null;
+  }
+
   return (
     <nav {...props}>
       <ul className="h-11 flex rounded-full bg-white/90 px-5 text-md lg:text-lg font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
-        <NavItem href="/">For Shops</NavItem>
-        <NavItem href="/marketplace">Marketplace</NavItem>
-        <NavItem href="/about">About</NavItem>
+        {activeLinks.map((link) => (
+          <NavItem key={link.text} href={link.href}>
+            {link.text}
+          </NavItem>
+        ))}
       </ul>
     </nav>
   );
@@ -192,7 +215,6 @@ function Avatar({
 
 export function Header() {
   let isHomePage = usePathname() === "/";
-  const isMarketplace = usePathname() === "/marketplace";
   const isAbout = usePathname() === "/about";
 
   let headerRef = useRef<React.ElementRef<"div">>(null);
@@ -369,7 +391,7 @@ export function Header() {
                 <Image
                   src={logo}
                   alt="company logo"
-                  className="md:h-20 md:w-20 h-12 w-12 bg-background rounded-full cursor-pointer"
+                  className="md:h-20 md:w-20 h-12 w-12 bg-transparent cursor-pointer"
                 />
               </Link>
             </div>
@@ -378,15 +400,10 @@ export function Header() {
               <DesktopNavigation className="pointer-events-auto hidden md:block" />
             </div>
             <div className="flex justify-end md:flex-1">
-              {isHomePage && (
+              {landingpageContent.header.button.active && (
                 <Button asChild variant="landingpageCTA" size="lg">
-                  <Link href={"/?onboarding=shop"}>Get started</Link>
-                </Button>
-              )}
-              {isMarketplace && (
-                <Button asChild variant="landingpageCTA" size="lg">
-                  <Link href={"/marketplace/?onboarding=user"}>
-                    Get started
+                  <Link href={landingpageContent.header.button.href}>
+                    {landingpageContent.header.button.text}
                   </Link>
                 </Button>
               )}
