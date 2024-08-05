@@ -21,7 +21,7 @@ export default function Signout() {
   }
   return (
     <div
-      className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent-100 hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+      className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-gray-100 hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
       onClick={handleLogoutClick}
     >
       <span>Sign Out</span>

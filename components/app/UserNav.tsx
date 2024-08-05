@@ -10,21 +10,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import Signout from "../auth-form/Signout";
+import Signout from "@/components/auth-form/Signout";
 
 interface iAppProps {
-  email: string;
-  name: string;
-  userImage: string | undefined;
+  user: any;
 }
 
-export function UserNav({ email, name, userImage }: iAppProps) {
+export function UserNav({ user }: iAppProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-          <Avatar className="h-10 w-10">
-            <AvatarImage src={userImage} alt="User Image" />
+        <Button variant="ghost" className="relative h-12 w-12 rounded-full">
+          <Avatar className="h-12 w-12">
+            <AvatarImage src={user.metadata} alt="User Image" />
             <AvatarFallback>{""}</AvatarFallback>
           </Avatar>
         </Button>
@@ -32,25 +30,16 @@ export function UserNav({ email, name, userImage }: iAppProps) {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{name}</p>
+            <p className="text-sm font-medium leading-none">{user.email}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              jan@alenix.de
+              {user.email}
             </p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href="/sell">Sell your Product</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/settings">Settings</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="my-products">My Products</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/billing">Billing</Link>
+            <Link href="/dashboard">Dashboard</Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

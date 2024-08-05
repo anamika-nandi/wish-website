@@ -17,6 +17,7 @@ import logo from "@/public/logo.png";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { landingpageContent } from "@/constants/landingpage";
+import { UserNav } from "../app/UserNav";
 
 function CloseIcon(props: React.ComponentPropsWithoutRef<"svg">) {
   return (
@@ -213,7 +214,7 @@ function Avatar({
   );
 }
 
-export function Header() {
+export function Header({ user }: { user: any }) {
   let isHomePage = usePathname() === "/";
   const isAbout = usePathname() === "/about";
 
@@ -400,12 +401,16 @@ export function Header() {
               <DesktopNavigation className="pointer-events-auto hidden md:block" />
             </div>
             <div className="flex justify-end md:flex-1">
-              {landingpageContent.header.button.active && (
-                <Button asChild variant="landingpageCTA" size="lg">
-                  <Link href={landingpageContent.header.button.href}>
-                    {landingpageContent.header.button.text}
-                  </Link>
-                </Button>
+              {user ? (
+                <UserNav user={user} />
+              ) : (
+                landingpageContent.header.button.active && (
+                  <Button asChild variant="landingpageCTA" size="lg">
+                    <Link href={landingpageContent.header.button.href}>
+                      {landingpageContent.header.button.text}
+                    </Link>
+                  </Button>
+                )
               )}
               {isAbout && (
                 <Button asChild variant="ghost">
