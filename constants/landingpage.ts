@@ -317,7 +317,6 @@ export const landingpageContent = {
         name: "Pinnacle Insurance",
         logo: "/images/logos/pinnacle-insurance.svg",
       },
-      { name: "Wealth Advisors", logo: "/images/logos/wealth-advisors.svg" },
     ],
   },
 

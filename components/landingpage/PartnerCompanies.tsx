@@ -18,7 +18,7 @@ export function PartnerCompanies() {
     >
       <Container>
         <div className="mx-auto max-w-5xl md:text-center">
-          <h2 className="font-display text-3xl tracking-tight text-stone-900 sm:text-4xl">
+          <h2 className="font-semibold text-3xl tracking-tight text-stone-900 sm:text-4xl">
             {content.headline}{" "}
             {content.highlightedText && (
               <span className="relative whitespace-nowrap text-accent-400">
@@ -36,7 +36,7 @@ export function PartnerCompanies() {
         <div className="mx-auto mt-16 max-w-max">
           <ul
             role="list"
-            className="grid grid-cols-2 gap-x-10 gap-y-10 sm:grid-cols-3 lg:gap-x-16 lg:gap-y-12"
+            className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 md:grid-cols-5 "
           >
             {content.companies.map((company) => (
               <li
