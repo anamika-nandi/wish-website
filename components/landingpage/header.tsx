@@ -12,11 +12,11 @@ import {
   PopoverPanel,
 } from "@headlessui/react";
 import clsx from "clsx";
-import { Container } from "@/components/landingpage/container";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { landingpageContent } from "@/constants/landingpage";
 import { UserNav } from "../app/UserNav";
+import { Container } from "./Container";
 
 function CloseIcon(props: React.ComponentPropsWithoutRef<"svg">) {
   return (

@@ -1,4 +1,4 @@
-import { Container } from "@/components/landingpage/container";
+import { Container } from "@/components/landingpage/Container";
 import HeroCTA from "./herocta";
 import { landingpageContent } from "@/constants/landingpage";
 import Image from "next/image";
