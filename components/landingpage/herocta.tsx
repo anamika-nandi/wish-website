@@ -62,16 +62,19 @@ export default function HeroCTA({
 
       {actions?.links.howItWorks.active && (
         <>
-          <Link
-            href={actions.links.howItWorks.link}
-            className="text-sm font-semibold leading-6 text-text-500 flex items-center space-x-1 hover:text-text-600 transition duration-200"
-          >
-            {actions.links.howItWorks.text}
-            <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-          </Link>
           <Button variant="landingpageCTA" size="lg" asChild>
             <Link href={button.link}>{button.text}</Link>
           </Button>
+          <Link
+            href={actions.links.howItWorks.link}
+            className="text-md md:text-xl font-semibold leading-6 text-text-500 flex items-center space-x-1 hover:text-text-600 transition duration-200"
+          >
+            {actions.links.howItWorks.text}
+            <ChevronRightIcon
+              className="h-5 w-5 md:h-8 md:w-8"
+              aria-hidden="true"
+            />
+          </Link>
         </>
       )}
     </div>

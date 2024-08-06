@@ -1,9 +1,11 @@
 import React from "react";
 import EmailSignUp from "@/components/landingpage/emailsignup";
-import { SecondaryFeatures } from "@/components/landingpage/secondaryFeature";
-import { PrimaryFeatures } from "@/components/landingpage/primaryFeature";
+import { FeatureSteps } from "@/components/landingpage/FeatureSteps";
 import { Hero } from "@/components/landingpage/Hero";
 import ImageSection from "@/components/landingpage/imageSection";
+import { BenefitsFeature } from "@/components/landingpage/BenefitsFeature";
+import { MiddleCallToAction } from "@/components/landingpage/MiddleCallToAction";
+import { Testimonials } from "@/components/landingpage/Testimonials";
 
 export default async function page({
   params,
@@ -16,8 +18,10 @@ export default async function page({
     <div className="text-text">
       <Hero />
       <ImageSection />
-      <SecondaryFeatures />
-      <PrimaryFeatures />
+      <BenefitsFeature />
+      <FeatureSteps />
+      <MiddleCallToAction />
+      <Testimonials />
       <EmailSignUp />
     </div>
   );

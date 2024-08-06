@@ -8,7 +8,7 @@ import clsx from "clsx";
 import { Container } from "@/components/landingpage/container";
 import { landingpageContent } from "@/constants/landingpage";
 
-export function PrimaryFeatures({ isMarketplace = false }) {
+export function BenefitsFeature({ isMarketplace = false }) {
   const content = landingpageContent;
 
   let [tabOrientation, setTabOrientation] = useState<"horizontal" | "vertical">(
@@ -32,8 +32,8 @@ export function PrimaryFeatures({ isMarketplace = false }) {
 
   return (
     <section
-      id={content.primaryfeatures.id}
-      aria-label={content.primaryfeatures.headline}
+      id={content.benefitsFeature.id}
+      aria-label={content.benefitsFeature.headline}
       className="relative overflow-hidden pb-28 pt-20 sm:py-32"
     >
       {/* <div className="absolute inset-0 bg-black/40 z-10" />
@@ -48,15 +48,15 @@ export function PrimaryFeatures({ isMarketplace = false }) {
       <Container className="relative z-20">
         <div className="max-w-2xl md:mx-auto md:text-center xl:max-w-none">
           <div className="relative flex flex-wrap justify-center items-center font-semibold text-3xl tracking-tight text-text-900 md:text-5xl">
-            <span className="block">{content.primaryfeatures.headline}</span>
+            <span className="block">{content.benefitsFeature.headline}</span>
             <span className="mt-2 ml-2 text-accent-400 whitespace-nowrap">
-              {content.primaryfeatures.highlightedText}
+              {content.benefitsFeature.highlightedText}
             </span>
-            <span className="mt-2 ml-2">{content.primaryfeatures.suffix}</span>
+            <span className="mt-2 ml-2">{content.benefitsFeature.suffix}</span>
           </div>
 
           <p className="mt-6 text-lg tracking-tight text-gray-600">
-            {content.primaryfeatures.subheadline}
+            {content.benefitsFeature.subheadline}
           </p>
         </div>
         <TabGroup
@@ -67,7 +67,7 @@ export function PrimaryFeatures({ isMarketplace = false }) {
             <>
               <div className="-mx-4 flex overflow-x-auto pb-4 sm:mx-0 sm:overflow-visible sm:pb-0 lg:col-span-5">
                 <TabList className="relative z-10 flex gap-x-4 whitespace-nowrap px-4 sm:mx-auto sm:px-0 lg:mx-0 lg:block lg:gap-x-0 lg:gap-y-1 lg:whitespace-normal">
-                  {content.primaryfeatures.features.map(
+                  {content.benefitsFeature.features.map(
                     (feature, featureIndex) => (
                       <div
                         key={feature.title}
@@ -107,7 +107,7 @@ export function PrimaryFeatures({ isMarketplace = false }) {
                 </TabList>
               </div>
               <TabPanels className="lg:col-span-7">
-                {content.primaryfeatures.features.map((feature) => (
+                {content.benefitsFeature.features.map((feature) => (
                   <TabPanel key={feature.title} unmount={false}>
                     <div className="relative sm:px-6 lg:hidden">
                       <div className="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-black/10 ring-1 ring-inset ring-black/10 sm:inset-x-0 sm:rounded-t-xl" />
