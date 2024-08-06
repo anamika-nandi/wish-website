@@ -38,17 +38,22 @@ export function Hero({ isMarketplace = false }) {
         <div className="mt-10 flex justify-center gap-x-6">
           <HeroCTA content={content} />
         </div>
-        <div className="flex gap-5 justify-center items-center mt-12 text-base md:text-xl text-black max-md:flex-wrap max-md:mt-10">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/9b8d0c3154642853c34faf3546b467694e8d4ed91605d3984dbb98d10580364e?apiKey=193a6a4f94f646c994bffe368cd1c20a&&apiKey=193a6a4f94f646c994bffe368cd1c20a"
-            alt=""
-            className="shrink-0 md:w-[172px] w-[100px] max-md:w-[80px] aspect-[2.94]"
-          />
-          <p className="my-auto text-gray-600">
-            <span className="font-medium">4k+</span> members already joined
-          </p>
-        </div>
+        {content.hero.socialCare.active && (
+          <div className="flex gap-5 justify-center items-center mt-12 text-base md:text-xl text-black max-md:flex-wrap max-md:mt-10">
+            <Image
+              loading="lazy"
+              src={content.hero.socialCare.image}
+              alt={content.hero.socialCare.text}
+              className="shrink-0 md:w-[172px] w-[100px] max-md:w-[80px] aspect-[2.94]"
+            />
+            <p className="my-auto text-gray-600">
+              <span className="font-medium">
+                {content.hero.socialCare.fatPrefix}
+              </span>{" "}
+              {content.hero.socialCare.text}
+            </p>
+          </div>
+        )}
       </Container>
     </div>
   );

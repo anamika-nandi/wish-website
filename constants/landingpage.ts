@@ -7,11 +7,21 @@ import avatarImage4 from "@/public/landingpage/avatars/avatar-4.png";
 import avatarImage5 from "@/public/landingpage/avatars/avatar-5.png";
 import backgroundImageMiddleCTA from "@/public/landingpage/bluebackgroundtree.jpg";
 import abstractBackgroundImage from "@/public/landingpage/abstract-background.png";
-import test from "node:test";
+import socialcareImg from "@/public/landingpage/socialcare.png";
+import logo from "@/public/logo.png";
 
 export const landingpageContent = {
   header: {
-    companyName: "Next.js Supabase Boilerplate",
+    company: {
+      name: "Company Name",
+      logo: logo,
+      logoHref: "/",
+    },
+    button: {
+      active: true,
+      text: "Get Started",
+      href: "/signin",
+    },
     NavAndFooterLinks: [
       {
         active: false,
@@ -24,11 +34,6 @@ export const landingpageContent = {
         href: "#features",
       },
     ],
-    button: {
-      active: true,
-      text: "Get Started",
-      href: "/signin",
-    },
   },
   // hero section
   hero: {
@@ -40,7 +45,7 @@ export const landingpageContent = {
       "Kickstart your project with an easy-to-use template for rapid landing page validation and development.",
     socialCare: {
       active: true,
-      image: "",
+      image: socialcareImg,
       fatPrefix: "4k+ ",
       text: "members already joined",
     },
@@ -67,6 +72,7 @@ export const landingpageContent = {
       },
     },
   },
+
   // problem section 1st outline the problem
   imageSection: {
     id: "image-section",
@@ -101,6 +107,7 @@ export const landingpageContent = {
       },
     ],
   },
+
   // benefits of the product
   benefitsFeature: {
     id: "features",
@@ -136,6 +143,7 @@ export const landingpageContent = {
       },
     ],
   },
+
   // features/steps section
   featureSteps: {
     id: "setup",
@@ -208,7 +216,7 @@ export const landingpageContent = {
       text: "Sign Up",
       href: "/signup",
     },
-    textColor: "text-stone-900",
+    textColor: "text-white",
     backgroundImage: backgroundImageMiddleCTA,
   },
 
@@ -284,6 +292,35 @@ export const landingpageContent = {
       ],
     ],
   },
+
+  // partner companies section
+  partnerCompanies: {
+    active: true,
+    id: "partner-companies",
+    headline: "Trusted by leading",
+    highlightedText: "financial institutions",
+    suffix: "",
+    subheadline:
+      "We're proud to work with some of the most respected names in the industry.",
+    companies: [
+      { name: "Global Bank", logo: "/images/logos/global-bank.svg" },
+      {
+        name: "Secure Investments",
+        logo: "/images/logos/secure-investments.svg",
+      },
+      { name: "Trust Financial", logo: "/images/logos/trust-financial.svg" },
+      {
+        name: "Fidelity Partners",
+        logo: "/images/logos/fidelity-partners.svg",
+      },
+      {
+        name: "Pinnacle Insurance",
+        logo: "/images/logos/pinnacle-insurance.svg",
+      },
+      { name: "Wealth Advisors", logo: "/images/logos/wealth-advisors.svg" },
+    ],
+  },
+
   // last Call to Action
   emailSignUp: {
     id: "email-sign-up",

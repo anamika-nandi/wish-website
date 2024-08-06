@@ -46,7 +46,7 @@ export function Footer() {
               )}
               <p className="text-sm text-gray-300 dark:text-gray-500">
                 &copy; {new Date().getFullYear()}{" "}
-                {landingpageContent.header.companyName}. All rights reserved.
+                {landingpageContent.header.company.name}. All rights reserved.
               </p>
             </div>
           </ContainerInner>

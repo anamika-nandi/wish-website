@@ -7,6 +7,8 @@ import { BenefitsFeature } from "@/components/landingpage/BenefitsFeature";
 import { MiddleCallToAction } from "@/components/landingpage/MiddleCallToAction";
 import { Testimonials } from "@/components/landingpage/Testimonials";
 
+import { PartnerCompanies } from "@/components/landingpage/PartnerCompanies";
+
 export default async function page({
   params,
   searchParams,
@@ -18,6 +20,7 @@ export default async function page({
     <div className="text-text">
       <Hero />
       <ImageSection />
+      <PartnerCompanies />
       <BenefitsFeature />
       <FeatureSteps />
       <MiddleCallToAction />
