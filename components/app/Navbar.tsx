@@ -31,14 +31,7 @@ export function Navbar({ user }: { user: any }) {
 
         <div className="flex items-center gap-x-2 ms-auto md:col-span-3">
           {user ? (
-            <UserNav
-              email={user.email as string}
-              name={"user.given_name as string"}
-              userImage={
-                "user.pictured" ??
-                `https://avatar.vercel.sh/eric.strohmaier00@gmail.com`
-              }
-            />
+            <UserNav user={user} />
           ) : (
             <div className="flex items-center gap-x-2">
               <Button variant="secondary" asChild>

@@ -9,6 +9,7 @@ export function MiddleCallToAction() {
   const content = landingpageContent;
 
   if (!content.middleCTA) return null;
+  if (content.middleCTA.active === false) return null;
 
   return (
     <section
