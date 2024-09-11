@@ -7,9 +7,9 @@ import { fetchDefaultValue } from "@/actions/powerpointstuff";
 import { Metadata } from "next/types";
 
 export const metadata: Metadata = {
-  title: "Eric's Todo List",
+  title: "About",
   alternates: {
-    canonical: "/todo",
+    canonical: "/about",
   },
 };
 

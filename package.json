@@ -7,13 +7,11 @@
     "build": "next build",
     "gettypes": "npx supabase gen types --lang=typescript --project-id 'vhxkjwczllimkfbbowmf' --schema public > types/supabase_generated.ts",
     "start": "next start",
-    "lint": "next lint",
-    "postinstall": "prisma generate"
+    "lint": "next lint"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
     "@headlessui/react": "^2.1.2",
-    "@prisma/client": "^5.13.0",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-avatar": "^1.1.0",
@@ -42,7 +40,6 @@
     "@tiptap/pm": "^2.3.2",
     "@tiptap/react": "^2.3.2",
     "@tiptap/starter-kit": "^2.3.2",
-    "@uploadthing/react": "^6.5.3",
     "ai": "^3.2.20",
     "class-variance-authority": "^0.7.0",
     "classnames": "^2.5.1",
@@ -78,7 +75,6 @@
     "ts-pattern": "^5.2.0",
     "type-fest": "^4.23.0",
     "ui": "*",
-    "uploadthing": "^6.10.3",
     "use-debounce": "^10.0.1",
     "uuidv4": "^6.2.13",
     "zod": "^3.23.8"
@@ -96,7 +92,6 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",
-    "prisma": "^5.13.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
