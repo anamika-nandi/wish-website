@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { landingpageContent } from "@/constants/landingpage";
-import { Container } from "./Container";
+import { Container } from "@/components/landingpage/Container";
 
 function QuoteIcon(props: React.ComponentPropsWithoutRef<"svg">) {
   return (

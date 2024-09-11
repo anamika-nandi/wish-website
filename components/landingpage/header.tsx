@@ -16,7 +16,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { landingpageContent } from "@/constants/landingpage";
 import { UserNav } from "../app/UserNav";
-import { Container } from "./Container";
+import { Container } from "@/components/landingpage/Container";
 
 function CloseIcon(props: React.ComponentPropsWithoutRef<"svg">) {
   return (
