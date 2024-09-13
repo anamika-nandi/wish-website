@@ -18,5 +18,19 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <body className={`h-full ${inter.className}`}>{children}</body>;
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  return (
+    <body className={`h-full ${inter.className}`}>
+      <div className="flex flex-col w-full h-full ">
+        <div className="absolute inset-0 bg-gradient-to-b from-lightBlue to-stone-50 opacity-70 -z-10"></div>
+        <Header user={user} />
+        <main className="flex-auto">{children}</main>
+      </div>
+      <Footer />
+    </body>
+  );
 }

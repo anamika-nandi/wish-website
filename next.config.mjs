@@ -17,6 +17,10 @@ const nextConfig = {
         hostname: "vhxkjwczllimkfbbowmf.supabase.co",
         protocol: "https",
       },
+      {
+        hostname: "images.unsplash.com",
+        protocol: "https",
+      },
     ],
   },
 };
