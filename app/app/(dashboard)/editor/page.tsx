@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -7,8 +7,7 @@ import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { ColorPicker } from "./_ui/color-picker-component";
 import { FontSelector } from "./_ui/font-selector-component";
-import Draggable from "react-draggable";
-import { Resizable } from "react-resizable";
+import { Rnd } from "react-rnd";
 
 interface TextElement {
   id: string;
@@ -17,20 +16,23 @@ interface TextElement {
     color: string;
     fontSize: number;
     fontFamily: string;
-    position: { x: number; y: number };
+    x: number;
+    y: number;
     width: number;
     height: number;
   };
 }
 
 interface CardData {
-  backgroundImage: string | null;
+  backgroundType: "image" | "video" | null;
+  backgroundSource: string | null;
   textElements: TextElement[];
 }
 
 export default function WishCardGenerator() {
   const [cardData, setCardData] = useState<CardData>({
-    backgroundImage: null,
+    backgroundType: null,
+    backgroundSource: null,
     textElements: [
       {
         id: "recipient",
@@ -39,7 +41,8 @@ export default function WishCardGenerator() {
           color: "#000000",
           fontSize: 24,
           fontFamily: "Arial",
-          position: { x: 20, y: 20 },
+          x: 20,
+          y: 20,
           width: 200,
           height: 50,
         },
@@ -51,7 +54,8 @@ export default function WishCardGenerator() {
           color: "#000000",
           fontSize: 18,
           fontFamily: "Arial",
-          position: { x: 20, y: 80 },
+          x: 20,
+          y: 80,
           width: 300,
           height: 100,
         },
@@ -63,7 +67,8 @@ export default function WishCardGenerator() {
           color: "#000000",
           fontSize: 16,
           fontFamily: "Arial",
-          position: { x: 20, y: 200 },
+          x: 20,
+          y: 200,
           width: 150,
           height: 50,
         },
@@ -72,6 +77,7 @@ export default function WishCardGenerator() {
   });
   const [selectedElement, setSelectedElement] = useState<string | null>(null);
   const [shareableUrl, setShareableUrl] = useState("");
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -86,9 +92,11 @@ export default function WishCardGenerator() {
     if (files && files[0]) {
       const reader = new FileReader();
       reader.onloadend = () => {
+        const fileType = files[0].type.split("/")[0];
         setCardData((prev) => ({
           ...prev,
-          backgroundImage: reader.result as string,
+          backgroundType: fileType as "image" | "video",
+          backgroundSource: reader.result as string,
         }));
       };
       reader.readAsDataURL(files[0]);
@@ -113,17 +121,21 @@ export default function WishCardGenerator() {
     }));
   };
 
-  const handleDrag = (id: string, e: any, data: { x: number; y: number }) => {
-    handleStyleChange(id, "position", { x: data.x, y: data.y });
+  const handleDragStop = (id: string, d: { x: number; y: number }) => {
+    handleStyleChange(id, "x", d.x);
+    handleStyleChange(id, "y", d.y);
   };
 
-  const handleResize = (
+  const handleResizeStop = (
     id: string,
-    e: any,
-    { size }: { size: { width: number; height: number } }
+    ref: HTMLElement,
+    position: { x: number; y: number },
+    size: { width: number; height: number }
   ) => {
     handleStyleChange(id, "width", size.width);
     handleStyleChange(id, "height", size.height);
+    handleStyleChange(id, "x", position.x);
+    handleStyleChange(id, "y", position.y);
   };
 
   const generateShareableUrl = () => {
@@ -188,11 +200,13 @@ export default function WishCardGenerator() {
             </div>
           ))}
           <div>
-            <Label htmlFor="backgroundImage">Upload Background Image</Label>
+            <Label htmlFor="backgroundUpload">
+              Upload Background Image or Video
+            </Label>
             <Input
-              id="backgroundImage"
+              id="backgroundUpload"
               type="file"
-              accept="image/*"
+              accept="image/*,video/*"
               onChange={handleBackgroundUpload}
             />
           </div>
@@ -210,46 +224,59 @@ export default function WishCardGenerator() {
       <div className="w-full md:w-1/2 p-6 bg-gray-200">
         <h2 className="text-2xl font-bold mb-4 text-primary">Preview</h2>
         <div className="relative w-full h-[600px] bg-white border border-gray-300 overflow-hidden">
-          {cardData.backgroundImage && (
+          {cardData.backgroundType === "image" && cardData.backgroundSource && (
             <img
-              src={cardData.backgroundImage}
+              src={cardData.backgroundSource}
               alt="Background"
               className="w-full h-full object-cover absolute"
             />
           )}
+          {cardData.backgroundType === "video" && cardData.backgroundSource && (
+            <video
+              ref={videoRef}
+              src={cardData.backgroundSource}
+              className="w-full h-full object-cover absolute"
+              autoPlay
+              loop
+              muted
+            />
+          )}
           {cardData.textElements.map((element) => (
-            <Draggable
+            <Rnd
               key={element.id}
-              position={element.style.position}
-              onStop={(e, data) => handleDrag(element.id, e, data)}
+              size={{
+                width: element.style.width,
+                height: element.style.height,
+              }}
+              position={{ x: element.style.x, y: element.style.y }}
+              onDragStop={(e, d) => handleDragStop(element.id, d)}
+              onResizeStop={(e, direction, ref, delta, position) =>
+                handleResizeStop(element.id, ref, position, {
+                  width: ref.style.width,
+                  height: ref.style.height,
+                })
+              }
               bounds="parent"
             >
-              <Resizable
-                width={element.style.width}
-                height={element.style.height}
-                onResize={(e, data) => handleResize(element.id, e, data)}
-                minConstraints={[100, 50]}
-                maxConstraints={[500, 300]}
+              <div
+                style={{
+                  color: element.style.color,
+                  fontSize: `${element.style.fontSize}px`,
+                  fontFamily: element.style.fontFamily,
+                  width: "100%",
+                  height: "100%",
+                  cursor: "move",
+                  border:
+                    selectedElement === element.id ? "2px dashed blue" : "none",
+                  padding: "5px",
+                  overflow: "hidden",
+                  wordWrap: "break-word",
+                }}
+                onClick={() => setSelectedElement(element.id)}
               >
-                <div
-                  style={{
-                    ...element.style,
-                    position: "absolute",
-                    cursor: "move",
-                    border:
-                      selectedElement === element.id
-                        ? "2px dashed blue"
-                        : "none",
-                    padding: "5px",
-                    overflow: "hidden",
-                    wordWrap: "break-word",
-                  }}
-                  onClick={() => setSelectedElement(element.id)}
-                >
-                  {element.content}
-                </div>
-              </Resizable>
-            </Draggable>
+                {element.content}
+              </div>
+            </Rnd>
           ))}
         </div>
       </div>
