@@ -225,6 +225,7 @@ export default function WishCardGenerator() {
         <h2 className="text-2xl font-bold mb-4 text-primary">Preview</h2>
         <div className="relative w-full h-[600px] bg-white border border-gray-300 overflow-hidden">
           {cardData.backgroundType === "image" && cardData.backgroundSource && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={cardData.backgroundSource}
               alt="Background"
@@ -252,8 +253,8 @@ export default function WishCardGenerator() {
               onDragStop={(e, d) => handleDragStop(element.id, d)}
               onResizeStop={(e, direction, ref, delta, position) =>
                 handleResizeStop(element.id, ref, position, {
-                  width: ref.style.width,
-                  height: ref.style.height,
+                  width: Number(ref.style.width.replace("px", "")),
+                  height: Number(ref.style.height.replace("px", "")),
                 })
               }
               bounds="parent"
