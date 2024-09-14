@@ -6,22 +6,35 @@ import { WishCard } from "@/components/WishCard";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
+interface TextElement {
+  id: string;
+  content: string;
+  style: {
+    color: string;
+    fontSize: number;
+    fontFamily: string;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+}
+
 interface CardData {
-  backgroundType: "image" | "video" | null;
-  backgroundSource: string | null;
-  textElements: Array<{
-    id: string;
-    content: string;
-    style: {
-      color: string;
-      fontSize: number;
-      fontFamily: string;
-      x: number;
-      y: number;
-      width: number;
-      height: number;
-    };
-  }>;
+  backgroundType: "color" | "gradient";
+  backgroundColor: string;
+  gradientFrom: string;
+  gradientTo: string;
+  mediaType: "image" | "video" | null;
+  mediaSource: string | null;
+  mediaPath: string | null;
+  mediaStyle: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  textElements: TextElement[];
 }
 
 export default function PreviewCardPage() {
@@ -43,6 +56,8 @@ export default function PreviewCardPage() {
       setError("No card data provided");
     }
   }, [searchParams]);
+
+  console.log(cardData);
 
   if (error) {
     return (
@@ -71,12 +86,8 @@ export default function PreviewCardPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <h1 className="text-3xl font-bold mb-6 text-primary">Preview Card</h1>
-      <div className="w-full max-w-3xl aspect-video bg-white shadow-lg overflow-hidden mb-6">
-        <WishCard
-          backgroundType={cardData.backgroundType}
-          backgroundSource={cardData.backgroundSource}
-          textElements={cardData.textElements}
-        />
+      <div className="w-full max-w-md bg-white shadow-lg overflow-hidden mb-6">
+        <WishCard cardData={cardData} />
       </div>
       <Link href="/" passHref>
         <Button>Create Your Own Card</Button>

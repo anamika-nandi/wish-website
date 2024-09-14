@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "gettypes": "npx supabase gen types --lang=typescript --project-id 'vhxkjwczllimkfbbowmf' --schema public > types/supabase_generated.ts",
+    "gettypes": "npx supabase gen types --lang=typescript --project-id 'dyuovgwoixwbvnmukvfu' --schema public > types/supabase_generated.ts",
     "start": "next start",
     "lint": "next lint"
   },
