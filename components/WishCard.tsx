@@ -14,35 +14,17 @@ interface TextElement {
   };
 }
 
-interface CardData {
-  backgroundType: "color" | "gradient";
-  backgroundColor: string;
-  gradientFrom: string;
-  gradientTo: string;
-  mediaType: "image" | "video" | null;
-  mediaSource: string | null;
-  mediaPath: string | null;
-  mediaStyle: {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
+interface WishCardProps {
+  backgroundType: "image" | "video" | null;
+  backgroundSource: string | null;
   textElements: TextElement[];
 }
 
-interface WishCardProps {
-  cardData: CardData;
-}
-
-export const WishCard: React.FC<WishCardProps> = ({ cardData }) => {
-  const backgroundStyle =
-    cardData.backgroundType === "color"
-      ? { backgroundColor: cardData.backgroundColor }
-      : {
-          backgroundImage: `linear-gradient(to bottom, ${cardData.gradientFrom}, ${cardData.gradientTo})`,
-        };
-
+export const WishCard: React.FC<WishCardProps> = ({
+  backgroundType,
+  backgroundSource,
+  textElements,
+}) => {
   return (
     <div className="relative w-full" style={{ paddingTop: "100%" }}>
       {" "}

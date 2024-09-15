@@ -25,40 +25,15 @@ interface TextElement {
 }
 
 interface CardData {
-  backgroundType: "color" | "gradient";
-  backgroundColor: string;
-  gradientFrom: string;
-  gradientTo: string;
-  mediaType: "image" | "video" | null;
-  mediaSource: string | null;
-  mediaStyle: {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
+  backgroundType: "image" | "video" | null;
+  backgroundSource: string | null;
   textElements: TextElement[];
 }
 
-const CARD_WIDTH = 400;
-const CARD_HEIGHT = 600;
-const DEFAULT_MEDIA_WIDTH = 240;
-const DEFAULT_MEDIA_HEIGHT = 168;
-
 export default function WishCardGenerator() {
   const [cardData, setCardData] = useState<CardData>({
-    backgroundType: "color",
-    backgroundColor: "#ffffff",
-    gradientFrom: "#ff9a9e",
-    gradientTo: "#fad0c4",
-    mediaType: null,
-    mediaSource: null,
-    mediaStyle: {
-      x: (CARD_WIDTH - DEFAULT_MEDIA_WIDTH) / 2,
-      y: (CARD_HEIGHT - DEFAULT_MEDIA_HEIGHT) / 2,
-      width: DEFAULT_MEDIA_WIDTH,
-      height: DEFAULT_MEDIA_HEIGHT,
-    },
+    backgroundType: null,
+    backgroundSource: null,
     textElements: [
       {
         id: "recipient",
@@ -106,76 +81,19 @@ export default function WishCardGenerator() {
   const [cardId, setCardId] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const handleBackgroundTypeChange = (value: "color" | "gradient") => {
-    setCardData((prev) => ({ ...prev, backgroundType: value }));
-  };
-
-  const handleBackgroundColorChange = (color: string) => {
-    setCardData((prev) => ({ ...prev, backgroundColor: color }));
-  };
-
-  const handleGradientChange = (type: "from" | "to", color: string) => {
-    setCardData((prev) => ({
-      ...prev,
-      [`gradient${type.charAt(0).toUpperCase() + type.slice(1)}`]: color,
-    }));
-  };
-
-  const handleMediaUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBackgroundUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     if (files && files[0]) {
-      const file = files[0];
-      const mediaType = file.type.startsWith("image/") ? "image" : "video";
-
-      setIsImageLoading(true);
-
-      try {
-        const response = await fetch("/api/upload", {
-          method: "POST",
-          body: file,
-          headers: {
-            "x-user-id": "1",
-            "x-filename": file.name,
-            "content-type": file.type,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(
-            `Upload failed: ${response.status} ${response.statusText}`
-          );
-        }
-
-        const { url } = await response.json();
-
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const fileType = files[0].type.split("/")[0];
         setCardData((prev) => ({
           ...prev,
-          mediaType,
-          mediaSource: url,
-          mediaStyle: prev.mediaSource
-            ? prev.mediaStyle
-            : {
-                x: (CARD_WIDTH - DEFAULT_MEDIA_WIDTH) / 2,
-                y: (CARD_HEIGHT - DEFAULT_MEDIA_HEIGHT) / 2,
-                width: DEFAULT_MEDIA_WIDTH,
-                height: DEFAULT_MEDIA_HEIGHT,
-              },
+          backgroundType: fileType as "image" | "video",
+          backgroundSource: reader.result as string,
         }));
-
-        toast.success("Upload successful", {
-          description: `Your ${mediaType} has been uploaded and set.`,
-        });
-      } catch (error) {
-        console.error("Upload error:", error);
-        toast.error("Upload failed", {
-          description:
-            error instanceof Error
-              ? error.message
-              : "There was an error uploading your file. Please try again.",
-        });
-      } finally {
-        setIsImageLoading(false);
-      }
+      };
+      reader.readAsDataURL(files[0]);
     }
   };
 
@@ -214,29 +132,6 @@ export default function WishCardGenerator() {
     handleStyleChange(id, "y", position.y);
   };
 
-  const handleMediaDragStop = (d: { x: number; y: number }) => {
-    setCardData((prev) => ({
-      ...prev,
-      mediaStyle: { ...prev.mediaStyle, x: d.x, y: d.y },
-    }));
-  };
-
-  const handleMediaResizeStop = (
-    ref: HTMLElement,
-    position: { x: number; y: number },
-    size: { width: number; height: number }
-  ) => {
-    setCardData((prev) => ({
-      ...prev,
-      mediaStyle: {
-        x: position.x,
-        y: position.y,
-        width: size.width,
-        height: size.height,
-      },
-    }));
-  };
-
   const saveCardToSupabase = async () => {
     const { data, error } = await supabase
       .from("wish_cards")
@@ -257,21 +152,6 @@ export default function WishCardGenerator() {
     const baseUrl = window.location.origin;
     const url = `${baseUrl}/preview/${id}`;
     setShareableUrl(url);
-
-    // Copy to clipboard
-    navigator.clipboard.writeText(url).then(
-      () => {
-        toast.success("URL copied to clipboard", {
-          description: "The shareable URL has been copied to your clipboard.",
-        });
-      },
-      (err) => {
-        console.error("Could not copy text: ", err);
-        toast.error("Failed to copy URL", {
-          description: "Please try copying the URL manually.",
-        });
-      }
-    );
   };
 
   return (
@@ -281,63 +161,6 @@ export default function WishCardGenerator() {
           Wish Card Generator
         </h2>
         <div className="space-y-6">
-          <div>
-            <Label>Background Type</Label>
-            <Select
-              onValueChange={handleBackgroundTypeChange}
-              value={cardData.backgroundType}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select background type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="color">Solid Color</SelectItem>
-                <SelectItem value="gradient">Gradient</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          {cardData.backgroundType === "color" && (
-            <div>
-              <Label>Background Color</Label>
-              <ColorPicker
-                color={cardData.backgroundColor}
-                onChange={handleBackgroundColorChange}
-              />
-            </div>
-          )}
-          {cardData.backgroundType === "gradient" && (
-            <>
-              <div>
-                <Label>Gradient From</Label>
-                <ColorPicker
-                  color={cardData.gradientFrom}
-                  onChange={(color: string) =>
-                    handleGradientChange("from", color)
-                  }
-                />
-              </div>
-              <div>
-                <Label>Gradient To</Label>
-                <ColorPicker
-                  color={cardData.gradientTo}
-                  onChange={(color: string) =>
-                    handleGradientChange("to", color)
-                  }
-                />
-              </div>
-            </>
-          )}
-          <div>
-            <Label htmlFor="mediaUpload">
-              Upload Image or Video (optional)
-            </Label>
-            <Input
-              id="mediaUpload"
-              type="file"
-              accept="image/*,video/*"
-              onChange={handleMediaUpload}
-            />
-          </div>
           {cardData.textElements.map((element) => (
             <div key={element.id} className="space-y-4">
               <Label htmlFor={element.id}>
@@ -385,6 +208,17 @@ export default function WishCardGenerator() {
               )}
             </div>
           ))}
+          <div>
+            <Label htmlFor="backgroundUpload">
+              Upload Background Image or Video
+            </Label>
+            <Input
+              id="backgroundUpload"
+              type="file"
+              accept="image/*,video/*"
+              onChange={handleBackgroundUpload}
+            />
+          </div>
         </div>
         <div className="mt-6">
           <Button onClick={saveCardToSupabase}>
