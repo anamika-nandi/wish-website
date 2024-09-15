@@ -29,7 +29,7 @@ export const WishCard: React.FC<WishCardProps> = ({
     <div className="relative w-full" style={{ paddingTop: "100%" }}>
       {" "}
       {/* 1:1 aspect ratio */}
-      <div className="absolute top-0 left-0 w-full h-full bg-white overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full bg-white overflow-hidden shadow-lg rounded-lg">
         {backgroundType === "image" && backgroundSource && (
           <img
             src={backgroundSource}
