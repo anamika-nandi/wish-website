@@ -8,14 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ColorPicker } from "./_ui/color-picker-component";
 import { FontSelector } from "./_ui/font-selector-component";
 import { Rnd } from "react-rnd";
-import { toast } from "sonner";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { supabase } from "@/utils/supabase/admin";
 
 interface TextElement {
   id: string;
@@ -110,16 +103,8 @@ export default function WishCardGenerator() {
   });
   const [selectedElement, setSelectedElement] = useState<string | null>(null);
   const [shareableUrl, setShareableUrl] = useState("");
+  const [cardId, setCardId] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isImageLoading, setIsImageLoading] = useState(false);
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const loadedCardData = urlParams.get("cardData");
-    if (loadedCardData) {
-      setCardData(JSON.parse(decodeURIComponent(loadedCardData)));
-    }
-  }, []);
 
   const handleBackgroundTypeChange = (value: "color" | "gradient") => {
     setCardData((prev) => ({ ...prev, backgroundType: value }));
@@ -252,10 +237,25 @@ export default function WishCardGenerator() {
     }));
   };
 
-  const generateShareableUrl = () => {
-    const baseUrl = window.location.origin + "/preview";
-    const encodedCardData = encodeURIComponent(JSON.stringify(cardData));
-    const url = `${baseUrl}?cardData=${encodedCardData}`;
+  const saveCardToSupabase = async () => {
+    const { data, error } = await supabase
+      .from("wish_cards")
+      .insert({
+        card_data: cardData,
+      })
+      .select();
+
+    if (error) {
+      console.error("Error saving card:", error);
+    } else if (data) {
+      setCardId(data[0].id);
+      generateShareableUrl(data[0].id);
+    }
+  };
+
+  const generateShareableUrl = (id: string) => {
+    const baseUrl = window.location.origin;
+    const url = `${baseUrl}/preview/${id}`;
     setShareableUrl(url);
 
     // Copy to clipboard
@@ -387,7 +387,9 @@ export default function WishCardGenerator() {
           ))}
         </div>
         <div className="mt-6">
-          <Button onClick={generateShareableUrl}>Generate Shareable URL</Button>
+          <Button onClick={saveCardToSupabase}>
+            Save and Generate Shareable URL
+          </Button>
           {shareableUrl && (
             <div className="mt-4">
               <Label>Shareable URL:</Label>
@@ -398,55 +400,23 @@ export default function WishCardGenerator() {
       </div>
       <div className="w-full md:w-1/2 p-6 bg-gray-200">
         <h2 className="text-2xl font-bold mb-4 text-primary">Preview</h2>
-        <div
-          className="relative border border-gray-300 overflow-hidden rounded-lg"
-          style={{
-            width: `${CARD_WIDTH}px`,
-            height: `${CARD_HEIGHT}px`,
-            background:
-              cardData.backgroundType === "color"
-                ? cardData.backgroundColor
-                : `linear-gradient(to bottom, ${cardData.gradientFrom}, ${cardData.gradientTo})`,
-          }}
-        >
-          {cardData.mediaSource && (
-            <Rnd
-              size={{
-                width: cardData.mediaStyle.width,
-                height: cardData.mediaStyle.height,
-              }}
-              position={{ x: cardData.mediaStyle.x, y: cardData.mediaStyle.y }}
-              onDragStop={(e, d) => handleMediaDragStop(d)}
-              onResizeStop={(e, direction, ref, delta, position) =>
-                handleMediaResizeStop(ref, position, {
-                  width: Number(ref.style.width.replace("px", "")),
-                  height: Number(ref.style.height.replace("px", "")),
-                })
-              }
-              bounds="parent"
-            >
-              {isImageLoading ? (
-                <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-lg">
-                  <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-                </div>
-              ) : cardData.mediaType === "image" ? (
-                <img
-                  src={cardData.mediaSource}
-                  alt="Uploaded image"
-                  className="w-full h-full object-cover rounded-lg shadow-md"
-                  style={{ pointerEvents: "none" }}
-                />
-              ) : (
-                <video
-                  src={cardData.mediaSource}
-                  className="w-full h-full object-cover rounded-lg shadow-md"
-                  controls
-                  style={{ pointerEvents: "none" }}
-                >
-                  Your browser does not support the video tag.
-                </video>
-              )}
-            </Rnd>
+        <div className="relative w-full h-[600px] bg-white border border-gray-300 overflow-hidden">
+          {cardData.backgroundType === "image" && cardData.backgroundSource && (
+            <img
+              src={cardData.backgroundSource}
+              alt="Background"
+              className="w-full h-full object-cover absolute"
+            />
+          )}
+          {cardData.backgroundType === "video" && cardData.backgroundSource && (
+            <video
+              ref={videoRef}
+              src={cardData.backgroundSource}
+              className="w-full h-full object-cover absolute"
+              autoPlay
+              loop
+              muted
+            />
           )}
           {cardData.textElements.map((element) => (
             <Rnd

@@ -44,58 +44,46 @@ export const WishCard: React.FC<WishCardProps> = ({ cardData }) => {
         };
 
   return (
-    <div
-      className="relative w-full h-full"
-      style={{
-        ...backgroundStyle,
-        width: "400px",
-        height: "600px",
-      }}
-    >
-      {cardData.mediaSource && (
-        <div
-          style={{
-            position: "absolute",
-            left: cardData.mediaStyle.x,
-            top: cardData.mediaStyle.y,
-            width: cardData.mediaStyle.width,
-            height: cardData.mediaStyle.height,
-          }}
-        >
-          {cardData.mediaType === "image" ? (
-            <img
-              src={cardData.mediaSource}
-              alt="Card media"
-              className="w-full h-full object-cover rounded-lg shadow-md"
-            />
-          ) : (
-            <video
-              src={cardData.mediaSource}
-              className="w-full h-full object-cover"
-              controls
-            >
-              Your browser does not support the video tag.
-            </video>
-          )}
-        </div>
-      )}
-      {cardData.textElements.map((element) => (
-        <div
-          key={element.id}
-          style={{
-            position: "absolute",
-            left: element.style.x,
-            top: element.style.y,
-            width: element.style.width,
-            height: element.style.height,
-            color: element.style.color,
-            fontSize: `${element.style.fontSize}px`,
-            fontFamily: element.style.fontFamily,
-          }}
-        >
-          {element.content}
-        </div>
-      ))}
+    <div className="relative w-full" style={{ paddingTop: "100%" }}>
+      {" "}
+      {/* 1:1 aspect ratio */}
+      <div className="absolute top-0 left-0 w-full h-full bg-white overflow-hidden">
+        {backgroundType === "image" && backgroundSource && (
+          <img
+            src={backgroundSource}
+            alt="Background"
+            className="w-full h-full object-cover"
+          />
+        )}
+        {backgroundType === "video" && backgroundSource && (
+          <video
+            src={backgroundSource}
+            className="w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+          />
+        )}
+        {textElements.map((element) => (
+          <div
+            key={element.id}
+            style={{
+              position: "absolute",
+              left: `${element.style.x}px`,
+              top: `${element.style.y}px`,
+              width: `${element.style.width}px`,
+              height: `${element.style.height}px`,
+              color: element.style.color,
+              fontSize: `${element.style.fontSize}px`,
+              fontFamily: element.style.fontFamily,
+              overflow: "hidden",
+              wordWrap: "break-word",
+            }}
+          >
+            {element.content}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
